@@ -4,8 +4,11 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
 import './index.css'
+import useUser from '../../hooks/useUser';
 
 export default function Registro() {
+
+    const { setToken } = useUser()
 
     const onFinish = async (values) => {
         console.log('Success:', values);
@@ -17,6 +20,7 @@ export default function Registro() {
                 password: values.password
             })
             localStorage.setItem('token', response.data.token)
+            setToken(response.data.token)
             console.log("TOKEN: ", response.data.token)
         }
         catch(err) {
