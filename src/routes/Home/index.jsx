@@ -14,6 +14,7 @@ export default function Home() {
     const [getBuscandoLetra, setBuscandoLetra] = useState(false);
     const [getLetra, setLetra] = useState('');
     const [isModalCreditOpen, setModalCreditOpen] = useState(false);
+    const [isModalLoginOpen, setModalLoginOpen] = useState(false);
     const [isModalWinOpen, setModalWinOpen] = useState(-1);
     const [getChatMessage, setChatMessage] = useState("");
     const [getChatMessages, setChatMessages] = useState([])
@@ -124,6 +125,10 @@ export default function Home() {
 
 
     const clickLetra = async (index) => {
+        if(isLogged == false) {
+            setModalLoginOpen(true)
+            return;
+        }
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/juego/jugar`, {index}, {headers:{'Authorization':`Bearer ${getToken}`}})
             api["success"]({
@@ -228,6 +233,14 @@ export default function Home() {
                 </>
             )}>
                 <p>No tienes suficiente saldo para comprar esa letra!</p>
+            </Modal>
+            <Modal title="Iniciar sesion" centered open={isModalLoginOpen} onOk={() => setModalLoginOpen(false)} onCancel={() => setModalLoginOpen(false)} footer={() => (
+                <>
+                    <Button onClick={() => window.location.href="/saldo"}>Cerrar</Button>
+                    <Button type='primary' onClick={() => window.location.href = '/login'}>Iniciar sesion</Button>
+                </>
+            )}>
+                <p>Debes iniciar sesion para poder jugar!</p>
             </Modal>
         </Container>
     )

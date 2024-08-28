@@ -57,19 +57,18 @@ export default function Login() {
                 <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}
                     type="password"
-                    placeholder="Password"
+                    placeholder="Contrasena"
                 />
                 </Form.Item>
                 <Form.Item>
                 <Form.Item name="remember" valuePropName="checked" noStyle>
-                    <Checkbox>Remember me</Checkbox>
+                    <Checkbox>Recordar contrasena</Checkbox>
                 </Form.Item>
                 </Form.Item>
                 <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
-                </Button>
+                <Button type="primary" htmlType="submit" className="login-form-button">Ingresar</Button>
                 </Form.Item>
+                <a href="/registro">Crear cuenta</a>
             </Form>
             </Card>
         </div>
