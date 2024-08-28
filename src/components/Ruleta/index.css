@@ -1,0 +1,10 @@
+.wheel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  button {
+    margin-top: 20px;
+  }
