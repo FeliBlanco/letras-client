@@ -20,7 +20,7 @@ export default function Menu() {
             <SubMenu>
                 {isLogged == true && 
                 <div style={{display:'flex', alignItems:'center'}}>
-                    <Saldo>Saldo: ${getUserData?.saldo.toLocaleString('es-ES')}</Saldo>
+                    <Saldo>Saldo: ${getUserData?.saldo?.toLocaleString('es-ES')}</Saldo>
                 </div>}
                 {
                     isLogged == true &&
@@ -35,8 +35,8 @@ export default function Menu() {
                                     <span>{getUserData?.nombre}</span>
                                 </div>
                                 <div>
-                                    <MenuButton>Cargar credito</MenuButton>
-                                    <MenuButton>Configuraciones</MenuButton>
+                                    <MenuButton onClick={() => window.location.href = "/saldo"}>Cargar crédito</MenuButton>
+                                    <MenuButton onClick={() => window.location.href = "/retirar"}>Retirar crédito</MenuButton>
                                     <MenuButton onClick={() => cerrarSesion()}>Cerrar sesion</MenuButton>
                                 </div>
                             </MenuContainer>

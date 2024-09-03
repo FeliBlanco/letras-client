@@ -195,7 +195,7 @@ export default function Home() {
 
                     <ContainerTable>
                         {
-                            getLetras.map((value, index) => <Letra ganador={value.ganador} selected={value.userid == getUserData?.id} onClick={() => clickLetra(index) } marcador={value.marcador} username={value.username} precio={value.precio} letra={value.name} key={`letra/d${index}`}/>)
+                            getLetras.map((value, index) => <Letra ganador={value.ganador} otherSelect={value.userid != 0 && value.userid != getUserData?.id} selected={value.userid == getUserData?.id} onClick={() => clickLetra(index) } marcador={value.marcador} username={value.username} precio={value.precio} letra={value.name} key={`letra/d${index}`}/>)
                         }
                     </ContainerTable>
                 </ContainerTodo>
@@ -204,7 +204,7 @@ export default function Home() {
                         <span>Chat</span>
                     </ChatHeader>
                     <ChatMessagesContainer>
-                        {getChatMessages.map((value, index) =>  <Message key={`chat-${index}`} fecha={value.fecha} message={value.message} username="felipin"/>)}
+                        {getChatMessages.map((value, index) =>  <Message key={`chat-${index}`} fecha={value.fecha} message={value.message} username={value.username}/>)}
                     </ChatMessagesContainer>
                     <ChatInputContainer>
                         {
@@ -236,7 +236,7 @@ export default function Home() {
             </Modal>
             <Modal title="Iniciar sesion" centered open={isModalLoginOpen} onOk={() => setModalLoginOpen(false)} onCancel={() => setModalLoginOpen(false)} footer={() => (
                 <>
-                    <Button onClick={() => window.location.href="/saldo"}>Cerrar</Button>
+                    <Button onClick={() => setModalLoginOpen(false)}>Cerrar</Button>
                     <Button type='primary' onClick={() => window.location.href = '/login'}>Iniciar sesion</Button>
                 </>
             )}>
@@ -262,11 +262,11 @@ const Message = ({message, username, fecha}) => {
     )
 }
 
-const Letra = ({letra, precio, ganador = false, username, onClick = () => {}, marcador, selected = "#fff"  }) => {
+const Letra = ({letra, precio, otherSelect=false, ganador = false, username, onClick = () => {}, marcador, selected = "#fff"  }) => {
     return (
         <div style={{display:'flex', justifyContent:'center'}}>
 
-            <ContainerLetra ganador={ganador} selected={selected} onClick={onClick}>
+            <ContainerLetra ganador={ganador} otherSelect={otherSelect} selected={selected} onClick={onClick}>
                 <div className='marcador'>
                     <MarcadorCuadrado marcador={marcador}/>
                 </div>
@@ -276,7 +276,7 @@ const Letra = ({letra, precio, ganador = false, username, onClick = () => {}, ma
                     <LetraValor>{letra}</LetraValor>
                 </div>
                 <div>
-                    <span><b>${precio.toLocaleString('es-ES')}</b></span>
+                    <span><b><span style={{fontSize:'12px'}}>Premio:</span> ${precio.toLocaleString('es-ES')}</b></span>
                 </div>
             </ContainerLetra>
         </div>
@@ -324,6 +324,7 @@ gap:5px;
 `
 
 const ChatMessagesContainer= styled.div`
+overflow-y:auto;
 padding:12px;
 flex:1;
 `
@@ -360,7 +361,7 @@ flex-direction:column;
 background:#f2f2f2;
 border-radius:10px;
 height:100%;
-overflow:hidden;
+max-height:calc(100vh - 80px);
 box-sizing:border-box;
 `
 
@@ -389,6 +390,7 @@ const MarcadorCuadrado = styled.div`
 const LetraValor = styled.span`
 font-size:52px;
 font-weight:800;
+text-transform:uppercase;
 `
 
 const ContainerTable = styled.div`
@@ -408,9 +410,9 @@ flex-direction:column;
 cursor:pointer;
 background:#fff;
 ${props => props.selected == true && `border:1px solid green;`}
+${props => props.otherSelect == true && `border:1px solid red;`}
 border-radius:4px;
 transition:transform 0.4s;
-text-transform:uppercase;
 &:hover {
     transform:scale(1.2);
 }

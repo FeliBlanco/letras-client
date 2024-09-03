@@ -5,6 +5,9 @@ import RouterLogged from './RouterLogged';
 import Login from './routes/Login';
 import Registro from './routes/Registro';
 import RouterUnlogged from './RouterUnlogged';
+import CargarSaldo from './routes/CargarSaldo';
+import CargaCompleta from './routes/CargaCompleta';
+import Retirar from './routes/Retirar';
 
 const router = createBrowserRouter([
     {
@@ -27,8 +30,23 @@ const router = createBrowserRouter([
         path:'/',
         element: <RouterLogged />,
         children: [
-            
+            {
+                path:'/saldo',
+                element: <CargarSaldo />
+            },
+            {
+                path:'/cargacompleta',
+                element: <CargaCompleta />
+            },
+            {
+                path:'/retirar',
+                element: <Retirar />
+            }
         ]
+    },
+    {
+        path:'*',
+        element: <Navigate to="/home"/>
     }
 ]);
 

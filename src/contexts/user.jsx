@@ -70,12 +70,24 @@ export default function UserProvider({children}) {
             if(getToken) {
                 try {
                     const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/data`, { headers: { 'Authorization': `Bearer ${getToken}`}});
+                    console.log("QUEE")
+                    console.log(response)
                     localStorage.setItem('userdata', JSON.stringify(response.data))
                     setLogged(true)
                     setUserData(response.data)
                 }
                 catch(err) {
-
+                    console.log("a")
+                    console.log(err)
+                    if(err.status == 503) {
+                        if(err.response.data.message == "user_not_found") {
+                            localStorage.removeItem('userdata')
+                            localStorage.removeItem('token')
+                            setLogged(false)
+                            setUserData(null)
+                        }
+                        alert("A")
+                    }
                 }
             }
         })()
