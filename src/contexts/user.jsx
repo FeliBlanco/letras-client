@@ -50,7 +50,6 @@ export default function UserProvider({children}) {
                             setLogged(true)
                         }
                         catch(err) {
-                            
                         }
                     }
                     setToken(token_storage)
@@ -79,15 +78,14 @@ export default function UserProvider({children}) {
                 catch(err) {
                     console.log("a")
                     console.log(err)
-                    if(err.status == 503) {
-                        if(err.response.data.message == "user_not_found") {
+                    if(err.status == 503 || err.status == 403) {
+                        if(err.response.data.message == "user_not_found" || err.response.data.message == "invalid_token") {
                             localStorage.removeItem('userdata')
                             localStorage.removeItem('token')
                             setLogged(false)
                             setUserData(null)
                         }
-                        alert("A")
-                    }
+                    } 
                 }
             }
         })()
